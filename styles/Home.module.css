@@ -34,6 +34,8 @@
   padding: 0.4rem;
   height: 30px;
   width: 300px;
+  border-radius: 8px;
+  border: 0;
 }
 
 .footer {
