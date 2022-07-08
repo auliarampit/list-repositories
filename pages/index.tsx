@@ -17,7 +17,6 @@ const Home: NextPage = () => {
         </div>
 
       <main className={styles.main}>
-
         <div className={styles.card}>
           <h2>nama aplikasi</h2>
           <div className={styles.raw}>
