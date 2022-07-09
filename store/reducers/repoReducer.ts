@@ -8,8 +8,6 @@ const initialState = {
 const sampleReducer = (state = initialState, action: { type: String; payload: Object; }) => {
   switch (action.type) {
     case GET_REPO:
-      console.log("initialState",initialState)
-      console.log("action.payload,",action.payload)
       return {
         ...state,
         repo: action.payload,

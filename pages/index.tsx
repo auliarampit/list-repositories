@@ -11,8 +11,6 @@ const Home: NextPage = () => {
 
   const { repo }: any = useSelector((state: any) => state.repoData);
 
-  console.log('repo', repo)
-
   const [input, setInput] = useState('')
 
   const handlePress = (e: any) => {
@@ -20,6 +18,10 @@ const Home: NextPage = () => {
       dispatch(getSampleData(input))
     }
   }
+
+  const openInNewTab = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <div className={styles.container}>
@@ -30,17 +32,24 @@ const Home: NextPage = () => {
       </Head>
 
       <div className={styles.header}>
-        <input
-          onChange={(e) => setInput(e.target.value)}
-          placeholder='Find User'
-          className={styles.input}
-          onKeyDown={handlePress}
-        />
-        <Image src={repo?.data ? repo?.data[0]?.owner?.avatar_url : "https://avatars.githubusercontent.com/u/50264897?v=4"}
+        <div className={styles.input}>
+          <input
+            onChange={(e) => setInput(e.target.value)}
+            placeholder='Find User'
+            className={styles.inputForm}
+            onKeyDown={handlePress}
+          />
+          <span className={styles.buttonSearch} onClick={() => dispatch(getSampleData(input))}>Search</span>
+        </div>
+        <Image 
+        src={repo?.data?.length > 0 ? 
+          repo?.data[0]?.owner?.avatar_url : 
+          "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png"}
           alt="Vercel Logo"
+          onClick={() => openInNewTab(repo?.data[0]?.owner?.html_url)}
           width={40}
           height={40}
-          style={{borderRadius: '50px'}}
+          style={{ borderRadius: '50px', cursor: 'pointer' }}
         />
       </div>
 
@@ -57,7 +66,7 @@ const Home: NextPage = () => {
               index: number) => {
               return (
                 <div key={index} className={styles.card}>
-                  <a href={item?.html_url} className={styles.title}>{item?.name}</a>
+                  <span onClick={() => openInNewTab(item?.html_url)} className={styles.title}>{item?.name}</span>
                   <div className={styles.row}>
                     <span>language: {item?.language} </span>
                     <span className={styles.description}>updated: {item?.updated_at.split('T')[0]}</span>
@@ -66,7 +75,7 @@ const Home: NextPage = () => {
               )
             })
             :
-            input.length > 0 ?
+            input.length > 0 && repo?.data?.length <= 0 || repo?.data?.message === 'Not Found' ?
               <div className="">
                 <h2>User Not Found!</h2>
               </div>

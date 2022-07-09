@@ -21,11 +21,10 @@ export default function handler(
   })
     .then(response => response.json())
     .then(data => {
-      return res.status(200).json({ success: true, message: `success retreive user ${username}`, data: data})
+      return res.status(200).json({ success: true, message: `Success Retreive User ${username}`, data: data})
     })
     .catch((error) => {
-      console.error('Error:', error);
-      res.status(500).json({ success: false, message: "Next Internal Server Error" })
+      res.status(500).json({ success: false, message: "Internal Server Error" })
     });
 
 

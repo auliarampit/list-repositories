@@ -32,11 +32,30 @@
 }
 
 .input {
-  padding: 0.4rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
   height: 30px;
   width: 320px;
   border-radius: 8px;
   border: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.inputForm {
+  width: 80%;
+  height: 90%;
+  margin-top: 2px;
+  border: none;
+}
+
+.buttonSearch {
+  height: 100%;
+  width: 100px;
+  cursor: pointer;
+  margin-left: 0.3rem;
 }
 
 .footer {
@@ -70,6 +89,7 @@
   line-height: 2.15;
   font-size: 1.8rem;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .title,
