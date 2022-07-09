@@ -3,12 +3,16 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getSampleData } from '../store/actions/repoAction'
 
 const Home: NextPage = () => {
   const dispatch = useDispatch<any>()
-  
+
+  const { repo }: any = useSelector((state: any) => state.repoData);
+
+  console.log('repo', repo)
+
   const [input, setInput] = useState('')
 
   const handlePress = (e: any) => {
@@ -35,29 +39,25 @@ const Home: NextPage = () => {
       </div>
 
       <main className={styles.main}>
-        <div className={styles.card}>
-          <h2>nama aplikasi</h2>
-          <div className={styles.raw}>
-            <p>bahasa</p>
-            <p>last update</p>
-          </div>
-        </div>
-
-        <div className={styles.card}>
-          <h2>nama aplikasi</h2>
-          <div className={styles.raw}>
-            <p>bahasa</p>
-            <p>last update</p>
-          </div>
-        </div>
-
-        <div className={styles.card}>
-          <h2>nama aplikasi</h2>
-          <div className={styles.raw}>
-            <p>bahasa</p>
-            <p>last update</p>
-          </div>
-        </div>
+        {
+          repo?.data?.map((item: {
+            id: number,
+            name: string,
+            language: string,
+            updated_at: any
+          },
+            index: number) => {
+            return (
+              <div key={index} className={styles.card}>
+                <h2>{item?.name}</h2>
+                <div className={styles.raw}>
+                  <p>{item?.language}</p>
+                  <p>{item?.updated_at.split('T')[0]}</p>
+                </div>
+              </div>
+            )
+          })
+        }
       </main>
 
       <footer className={styles.footer}>

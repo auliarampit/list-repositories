@@ -13,7 +13,7 @@ export default function handler(
 ) {
   const { username } = req.query
 
-  fetch(`https://api.github.com/users/${username}/repos`, {
+  fetch(`https://api.github.com/users/${username}/repos?sort=created&direction=desc`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
