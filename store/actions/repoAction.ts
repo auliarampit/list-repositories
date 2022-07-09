@@ -1,14 +1,22 @@
 import { GET_REPO, REPO_ERROR } from "../types";
 
-export const getSampleData = () => async (dispatch: (arg0: { 
-    type: string;
-    payload: string | number[];
-}) => void) => {
+export const getSampleData = (input: string) => (dispatch: any) => {
   try {
-    dispatch({
-      type: GET_REPO,
-      payload: [1, 2, 3, 4, 5, 6],
-    });
+
+    fetch(`api/github/repository/${input}`)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({
+          type: GET_REPO,
+          payload: data,
+        });
+      }).catch(() => {
+        dispatch({
+          type: REPO_ERROR,
+          payload: "error message",
+        });
+      })
+
   } catch (error) {
     dispatch({
       type: REPO_ERROR,
