@@ -36,27 +36,44 @@ const Home: NextPage = () => {
           className={styles.input}
           onKeyDown={handlePress}
         />
+        <Image src={repo?.data ? repo?.data[0]?.owner?.avatar_url : "https://avatars.githubusercontent.com/u/50264897?v=4"}
+          alt="Vercel Logo"
+          width={40}
+          height={40}
+          style={{borderRadius: '50px'}}
+        />
       </div>
 
       <main className={styles.main}>
         {
-          repo?.data?.map((item: {
-            id: number,
-            name: string,
-            language: string,
-            updated_at: any
-          },
-            index: number) => {
-            return (
-              <div key={index} className={styles.card}>
-                <h2>{item?.name}</h2>
-                <div className={styles.raw}>
-                  <p>{item?.language}</p>
-                  <p>{item?.updated_at.split('T')[0]}</p>
+          repo?.data?.length ?
+            repo?.data?.map((item: {
+              id: number,
+              name: string,
+              language: string,
+              updated_at: any,
+              html_url: string,
+            },
+              index: number) => {
+              return (
+                <div key={index} className={styles.card}>
+                  <a href={item?.html_url} className={styles.title}>{item?.name}</a>
+                  <div className={styles.row}>
+                    <span>language: {item?.language} </span>
+                    <span className={styles.description}>updated: {item?.updated_at.split('T')[0]}</span>
+                  </div>
                 </div>
+              )
+            })
+            :
+            input.length > 0 ?
+              <div className="">
+                <h2>User Not Found!</h2>
               </div>
-            )
-          })
+              :
+              <div className="">
+                <h2>Please search for user</h2>
+              </div>
         }
       </main>
 
